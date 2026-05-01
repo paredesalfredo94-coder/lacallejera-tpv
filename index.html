@@ -2,169 +2,99 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>La Callejera TPV</title>
-
 <style>
-body{
-margin:0;
-font-family:Arial, Helvetica, sans-serif;
-background:#0b0b0b;
-color:white;
-}
-
-header{
-background:#111;
-padding:20px;
-text-align:center;
-font-size:32px;
-font-weight:bold;
-color:#d4af37;
-border-bottom:2px solid #d4af37;
-}
-
-.container{
-display:grid;
-grid-template-columns:2fr 1fr;
-gap:20px;
-padding:20px;
-}
-
-.products{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:15px;
-}
-
-.card{
-background:#151515;
-border:1px solid #d4af37;
-padding:20px;
-border-radius:12px;
-text-align:center;
-cursor:pointer;
-font-size:22px;
-}
-
-.card:hover{
-background:#222;
-}
-
-.order{
-background:#151515;
-border:1px solid #d4af37;
-padding:20px;
-border-radius:12px;
-}
-
-#list{
-min-height:250px;
-font-size:20px;
-line-height:1.8;
-}
-
-.total{
-font-size:38px;
-color:#d4af37;
-margin-top:20px;
-font-weight:bold;
-}
-
-.pay{
-display:grid;
-grid-template-columns:1fr;
-gap:10px;
-margin-top:20px;
-}
-
+body{font-family:Arial;margin:0;background:#111;color:#fff}
+header{background:#e63946;padding:15px;text-align:center;font-size:26px;font-weight:bold}
+.container{padding:15px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 button{
-padding:16px;
-font-size:22px;
-border:none;
-border-radius:10px;
-cursor:pointer;
-font-weight:bold;
+width:100%;padding:18px;border:none;border-radius:12px;
+font-size:16px;font-weight:bold;cursor:pointer
 }
-
-.cash{background:#1f8f3a;color:white;}
-.cardpay{background:#d4af37;color:black;}
-.bizum{background:#1f6fff;color:white;}
-.clear{background:#aa2222;color:white;}
-
-footer{
-text-align:center;
-padding:15px;
-color:#888;
+.product{background:#222;color:#fff}
+.pay{background:#2a9d8f;color:#fff}
+.clear{background:#666;color:#fff}
+.total{
+margin:20px 0;padding:18px;background:#000;
+border:2px solid #e63946;border-radius:12px;
+font-size:28px;text-align:center;font-weight:bold
 }
+.list{
+background:#1b1b1b;padding:12px;border-radius:12px;
+min-height:120px
+}
+.small{font-size:14px;color:#ccc}
 </style>
 </head>
-
 <body>
 
-<header>LA CALLEJERA TPV</header>
+<header>🍔 La Callejera TPV</header>
 
 <div class="container">
 
-<div class="products">
-
-<div class="card" onclick="add('La clásica',8.5)">La clásica<br>8,50€</div>
-<div class="card" onclick="add('La clásica doble',10)">La clásica doble<br>10€</div>
-<div class="card" onclick="add('La puro Lomito',12)">La puro Lomito<br>12€</div>
-<div class="card" onclick="add('La desmechadita',12)">La desmechadita<br>12€</div>
-<div class="card" onclick="add('La mixta',14)">La mixta<br>14€</div>
-<div class="card" onclick="add('Coca-Cola',2)">Coca-Cola<br>2€</div>
-
+<div class="grid">
+<button class="product" onclick="add('La clásica',8.5)">La clásica €8.50</button>
+<button class="product" onclick="add('Clásica doble',10)">Clásica doble €10</button>
+<button class="product" onclick="add('Puro lomito',12)">Puro lomito €12</button>
+<button class="product" onclick="add('Desmechadita',12)">Desmechadita €12</button>
+<button class="product" onclick="add('Mixta',14)">Mixta €14</button>
+<button class="product" onclick="add('Coca-Cola',2)">Coca-Cola €2</button>
 </div>
 
-<div class="order">
-<h2>Pedido actual</h2>
-<div id="list"></div>
+<div class="total" id="total">€0.00</div>
 
-<div class="total">
-Total: <span id="total">0.00</span> €
+<div class="grid">
+<button class="pay" onclick="pay('Efectivo')">💵 Efectivo</button>
+<button class="pay" onclick="pay('Tarjeta')">💳 Tarjeta</button>
+<button class="pay" onclick="pay('Bizum')">📱 Bizum</button>
+<button class="clear" onclick="resetSale()">🗑️ Borrar</button>
 </div>
 
-<div class="pay">
-<button class="cash" onclick="pay('Efectivo')">💶 Efectivo</button>
-<button class="cardpay" onclick="pay('Tarjeta')">💳 Tarjeta</button>
-<button class="bizum" onclick="pay('Bizum')">📱 Bizum</button>
-<button class="clear" onclick="clearOrder()">❌ Cancelar</button>
-</div>
+<h3>Venta actual</h3>
+<div class="list" id="items"></div>
+
+<h3>Historial del día</h3>
+<div class="list" id="history"></div>
+
+<h3>Caja del día</h3>
+<div class="total" id="cash">€0.00</div>
 
 </div>
-
-</div>
-
-<footer>La callejera © TPV</footer>
 
 <script>
-let order=[];
 let total=0;
+let items=[];
+let cash=0;
 
 function add(name,price){
-order.push(name);
-total += price;
+items.push(name+" €"+price.toFixed(2));
+total+=price;
 render();
 }
 
 function render(){
-document.getElementById("list").innerHTML = order.join("<br>");
-document.getElementById("total").innerText = total.toFixed(2);
-}
-
-function clearOrder(){
-order=[];
-total=0;
-render();
+document.getElementById("items").innerHTML=items.join("<br>");
+document.getElementById("total").innerHTML="€"+total.toFixed(2);
+document.getElementById("cash").innerHTML="€"+cash.toFixed(2);
 }
 
 function pay(method){
-if(total===0){
-alert("No hay pedido");
-return;
+if(total===0)return;
+let line=method+" - €"+total.toFixed(2);
+document.getElementById("history").innerHTML=line+"<br>"+document.getElementById("history").innerHTML;
+cash+=total;
+resetSale(false);
+render();
 }
-alert("Venta registrada en " + method + " por " + total.toFixed(2) + "€");
-clearOrder();
+
+function resetSale(renderNow=true){
+total=0;
+items=[];
+document.getElementById("items").innerHTML="";
+document.getElementById("total").innerHTML="€0.00";
+if(renderNow)render();
 }
 </script>
 
