@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Callejera TPV</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial, Helvetica, sans-serif;
+background:#0b0b0b;
+color:white;
+}
+
+header{
+background:#111;
+padding:20px;
+text-align:center;
+font-size:32px;
+font-weight:bold;
+color:#d4af37;
+border-bottom:2px solid #d4af37;
+}
+
+.container{
+display:grid;
+grid-template-columns:2fr 1fr;
+gap:20px;
+padding:20px;
+}
+
+.products{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:15px;
+}
+
+.card{
+background:#151515;
+border:1px solid #d4af37;
+padding:20px;
+border-radius:12px;
+text-align:center;
+cursor:pointer;
+font-size:22px;
+}
+
+.card:hover{
+background:#222;
+}
+
+.order{
+background:#151515;
+border:1px solid #d4af37;
+padding:20px;
+border-radius:12px;
+}
+
+#list{
+min-height:250px;
+font-size:20px;
+line-height:1.8;
+}
+
+.total{
+font-size:38px;
+color:#d4af37;
+margin-top:20px;
+font-weight:bold;
+}
+
+.pay{
+display:grid;
+grid-template-columns:1fr;
+gap:10px;
+margin-top:20px;
+}
+
+button{
+padding:16px;
+font-size:22px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+font-weight:bold;
+}
+
+.cash{background:#1f8f3a;color:white;}
+.cardpay{background:#d4af37;color:black;}
+.bizum{background:#1f6fff;color:white;}
+.clear{background:#aa2222;color:white;}
+
+footer{
+text-align:center;
+padding:15px;
+color:#888;
+}
+</style>
+</head>
+
+<body>
+
+<header>LA CALLEJERA TPV</header>
+
+<div class="container">
+
+<div class="products">
+
+<div class="card" onclick="add('La clásica',8.5)">La clásica<br>8,50€</div>
+<div class="card" onclick="add('La clásica doble',10)">La clásica doble<br>10€</div>
+<div class="card" onclick="add('La puro Lomito',12)">La puro Lomito<br>12€</div>
+<div class="card" onclick="add('La desmechadita',12)">La desmechadita<br>12€</div>
+<div class="card" onclick="add('La mixta',14)">La mixta<br>14€</div>
+<div class="card" onclick="add('Coca-Cola',2)">Coca-Cola<br>2€</div>
+
+</div>
+
+<div class="order">
+<h2>Pedido actual</h2>
+<div id="list"></div>
+
+<div class="total">
+Total: <span id="total">0.00</span> €
+</div>
+
+<div class="pay">
+<button class="cash" onclick="pay('Efectivo')">💶 Efectivo</button>
+<button class="cardpay" onclick="pay('Tarjeta')">💳 Tarjeta</button>
+<button class="bizum" onclick="pay('Bizum')">📱 Bizum</button>
+<button class="clear" onclick="clearOrder()">❌ Cancelar</button>
+</div>
+
+</div>
+
+</div>
+
+<footer>La callejera © TPV</footer>
+
+<script>
+let order=[];
+let total=0;
+
+function add(name,price){
+order.push(name);
+total += price;
+render();
+}
+
+function render(){
+document.getElementById("list").innerHTML = order.join("<br>");
+document.getElementById("total").innerText = total.toFixed(2);
+}
+
+function clearOrder(){
+order=[];
+total=0;
+render();
+}
+
+function pay(method){
+if(total===0){
+alert("No hay pedido");
+return;
+}
+alert("Venta registrada en " + method + " por " + total.toFixed(2) + "€");
+clearOrder();
+}
+</script>
+
+</body>
+</html>
