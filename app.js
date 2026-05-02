@@ -40,7 +40,7 @@ let total=0;
 
 venta.forEach(v=>{
 total += v.precio;
-html += <div class="linea">${v.nombre} - ${v.precio.toFixed(2)}€</div>;
+html += `<div class="linea">${v.nombre} - ${v.precio.toFixed(2)}€</div>`;
 });
 
 document.getElementById("listaVenta").innerHTML=html || "Sin productos";
