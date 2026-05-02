@@ -25,13 +25,17 @@ function renderProductos() {
     productos.forEach((p,i)=>{
 
         html += `
-        <button onclick="agregarProducto(${i})">
-            <img src="${p.imagen}" style="width:90px;height:90px;object-fit:contain;"><br>
-            ${p.nombre}<br>
-            ${p.precio.toFixed(2)}€
-        </button>
-        `;
-    });
+<button onclick="agregarProducto(${i})">
+
+<img src="${p.imagen}">
+
+<div class="infoProducto">
+<div class="tituloProducto">${p.nombre}</div>
+<div class="precioProducto">${p.precio.toFixed(2)}€</div>
+</div>
+
+</button>
+`;
 
     document.getElementById("productosGrid").innerHTML = html;
 }
