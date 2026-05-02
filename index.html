@@ -3,99 +3,190 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>La Callejera TPV</title>
+<title>La Callejera TPV PRO</title>
 <style>
-body{font-family:Arial;margin:0;background:#111;color:#fff}
-header{background:#e63946;padding:15px;text-align:center;font-size:26px;font-weight:bold}
-.container{padding:15px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-button{
-width:100%;padding:18px;border:none;border-radius:12px;
-font-size:16px;font-weight:bold;cursor:pointer
+*{box-sizing:border-box}
+body{
+margin:0;
+font-family:Arial,Helvetica,sans-serif;
+background:#0e0e0e;
+color:#fff;
 }
-.product{background:#222;color:#fff}
-.pay{background:#2a9d8f;color:#fff}
-.clear{background:#666;color:#fff}
+header{
+background:#c1121f;
+padding:18px;
+text-align:center;
+font-size:30px;
+font-weight:700;
+letter-spacing:1px;
+}
+.wrap{
+max-width:1200px;
+margin:auto;
+padding:15px;
+display:grid;
+grid-template-columns:2fr 1fr;
+gap:15px;
+}
+.grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
+}
+.btn{
+border:none;
+border-radius:14px;
+padding:18px;
+font-size:18px;
+font-weight:700;
+cursor:pointer;
+transition:.2s;
+}
+.btn:hover{transform:scale(1.02)}
+.product{background:#1f1f1f;color:#fff;border:1px solid #c1121f}
+.pay{background:#c1121f;color:#fff}
+.secondary{background:#333;color:#fff}
+.panel{
+background:#161616;
+border-radius:14px;
+padding:15px;
+border:1px solid #2b2b2b;
+}
+h2,h3{margin:0 0 10px}
 .total{
-margin:20px 0;padding:18px;background:#000;
-border:2px solid #e63946;border-radius:12px;
-font-size:28px;text-align:center;font-weight:bold
+font-size:34px;
+font-weight:800;
+color:#ff4d4d;
+text-align:center;
+padding:10px 0;
 }
 .list{
-background:#1b1b1b;padding:12px;border-radius:12px;
-min-height:120px
+min-height:140px;
+line-height:1.8;
+color:#ddd;
+font-size:16px;
 }
-.small{font-size:14px;color:#ccc}
+.small{font-size:14px;color:#aaa}
+.stats{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+margin-top:10px;
+}
+.stat{
+background:#222;
+padding:12px;
+border-radius:10px;
+text-align:center;
+}
+@media(max-width:900px){
+.wrap{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
 
-<header>🍔 La Callejera TPV</header>
+<header>🍔 LA CALLEJERA TPV PRO</header>
 
-<div class="container">
+<div class="wrap">
 
-<div class="grid">
-<button class="product" onclick="add('La clásica',8.5)">La clásica €8.50</button>
-<button class="product" onclick="add('Clásica doble',10)">Clásica doble €10</button>
-<button class="product" onclick="add('Puro lomito',12)">Puro lomito €12</button>
-<button class="product" onclick="add('Desmechadita',12)">Desmechadita €12</button>
-<button class="product" onclick="add('Mixta',14)">Mixta €14</button>
-<button class="product" onclick="add('Coca-Cola',2)">Coca-Cola €2</button>
-</div>
-
-<div class="total" id="total">€0.00</div>
+<div class="panel">
+<h2>Productos</h2>
 
 <div class="grid">
-<button class="pay" onclick="pay('Efectivo')">💵 Efectivo</button>
-<button class="pay" onclick="pay('Tarjeta')">💳 Tarjeta</button>
-<button class="pay" onclick="pay('Bizum')">📱 Bizum</button>
-<button class="clear" onclick="resetSale()">🗑️ Borrar</button>
+<button class="btn product" onclick="add('Clásica',8.5)">Clásica<br>8,50€</button>
+<button class="btn product" onclick="add('Clásica doble',10)">Clásica doble<br>10€</button>
+<button class="btn product" onclick="add('Puro lomito',12)">Puro lomito<br>12€</button>
+<button class="btn product" onclick="add('Desmechadita',12)">Desmechadita<br>12€</button>
+<button class="btn product" onclick="add('Mixta',14)">Mixta<br>14€</button>
+<button class="btn product" onclick="add('Coca-Cola Original',2)">Coca-Cola Original<br>2€</button>
+<button class="btn product" onclick="add('Coca-Cola Zero',2)">Coca-Cola Zero<br>2€</button>
 </div>
 
-<h3>Venta actual</h3>
-<div class="list" id="items"></div>
+<h3 style="margin-top:18px">Cobrar</h3>
+<div class="grid">
+<button class="btn pay" onclick="pay('Efectivo')">💵 Efectivo</button>
+<button class="btn pay" onclick="pay('Tarjeta')">💳 Tarjeta</button>
+<button class="btn pay" onclick="pay('Bizum')">📱 Bizum</button>
+<button class="btn secondary" onclick="clearSale()">🗑️ Borrar</button>
+</div>
+</div>
 
-<h3>Historial del día</h3>
-<div class="list" id="history"></div>
+<div class="panel">
+<h2>Venta actual</h2>
+<div id="sale" class="list small">Sin productos</div>
 
-<h3>Caja del día</h3>
-<div class="total" id="cash">€0.00</div>
+<div class="total" id="total">0.00€</div>
+
+<h3>Historial</h3>
+<div id="history" class="list small">Sin ventas aún</div>
+
+<div class="stats">
+<div class="stat">
+<div class="small">Caja del día</div>
+<div id="cash">0.00€</div>
+</div>
+
+<div class="stat">
+<div class="small">Ventas</div>
+<div id="count">0</div>
+</div>
+</div>
+
+</div>
 
 </div>
 
 <script>
-let total=0;
 let items=[];
+let total=0;
 let cash=0;
+let count=0;
 
 function add(name,price){
-items.push(name+" €"+price.toFixed(2));
+items.push({name,price});
 total+=price;
 render();
 }
 
 function render(){
-document.getElementById("items").innerHTML=items.join("<br>");
-document.getElementById("total").innerHTML="€"+total.toFixed(2);
-document.getElementById("cash").innerHTML="€"+cash.toFixed(2);
+if(items.length===0){
+document.getElementById("sale").innerHTML="Sin productos";
+}else{
+document.getElementById("sale").innerHTML=
+items.map(i=>"• "+i.name+" - "+i.price.toFixed(2)+"€").join("<br>");
 }
 
-function pay(method){
-if(total===0)return;
-let line=method+" - €"+total.toFixed(2);
-document.getElementById("history").innerHTML=line+"<br>"+document.getElementById("history").innerHTML;
-cash+=total;
-resetSale(false);
+document.getElementById("total").innerHTML=total.toFixed(2)+"€";
+document.getElementById("cash").innerHTML=cash.toFixed(2)+"€";
+document.getElementById("count").innerHTML=count;
+}
+
+function clearSale(){
+items=[];
+total=0;
 render();
 }
 
-function resetSale(renderNow=true){
-total=0;
-items=[];
-document.getElementById("items").innerHTML="";
-document.getElementById("total").innerHTML="€0.00";
-if(renderNow)render();
+function pay(method){
+if(total<=0)return;
+
+let text = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})+
+" - "+method+" - "+total.toFixed(2)+"€";
+
+let h=document.getElementById("history");
+
+if(h.innerHTML==="Sin ventas aún"){h.innerHTML=""}
+
+h.innerHTML=text+"<br>"+h.innerHTML;
+
+cash+=total;
+count++;
+clearSale();
+render();
 }
+
+render();
 </script>
 
 </body>
