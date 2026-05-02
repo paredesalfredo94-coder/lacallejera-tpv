@@ -1,3 +1,4 @@
+alert("VERSION NUEVA");
 let productos = JSON.parse(localStorage.getItem("productos")) || [
   { nombre: "Clásica", precio: 8.50 },
   { nombre: "Clásica doble", precio: 10 },
