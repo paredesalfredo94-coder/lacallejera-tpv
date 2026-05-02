@@ -1,29 +1,19 @@
-alert("VERSION NUEVA");
-let productos = JSON.parse(localStorage.getItem("productos")) || [
-  { nombre: "Clásica", precio: 8.50 },
-  { nombre: "Clásica doble", precio: 10 },
-  { nombre: "Puro lomito", precio: 12 },
-  { nombre: "Desmechadita", precio: 12 },
-  { nombre: "Mixta", precio: 14 },
-  { nombre: "Coca-Cola Original", precio: 2 },
-  { nombre: "Coca-Cola Zero", precio: 2 }
+const productos = [
+ {nombre:"Clásica", precio:8.50},
+ {nombre:"Clásica doble", precio:10.00},
+ {nombre:"Puro lomito", precio:12.00},
+ {nombre:"Desmechadita", precio:12.00},
+ {nombre:"Mixta", precio:14.00},
+ {nombre:"Coca-Cola Original", precio:2.00},
+ {nombre:"Coca-Cola Zero", precio:2.00}
 ];
 
 let venta = [];
-let historial = JSON.parse(localStorage.getItem("historial")) || [];
-let cajaDia = Number(localStorage.getItem("cajaDia")) || 0;
-
-function guardarTodo() {
-  localStorage.setItem("productos", JSON.stringify(productos));
-  localStorage.setItem("historial", JSON.stringify(historial));
-  localStorage.setItem("cajaDia", cajaDia);
-}
 
 function renderProductos() {
-
     let html = "";
 
-    productos.forEach((p, i) => {
+    productos.forEach((p,i)=>{
         html += `
         <button onclick="agregarProducto(${i})">
             ${p.nombre}<br>
@@ -35,31 +25,31 @@ function renderProductos() {
     document.getElementById("productosGrid").innerHTML = html;
 }
 
-  document.getElementById("productosGrid").innerHTML = html;
+function agregarProducto(i){
+    venta.push(productos[i]);
+    renderVenta();
 }
 
-function agregar(i) {
-  venta.push(productos[i]);
-  renderVenta();
+function renderVenta(){
+    let html = "";
+    let total = 0;
+
+    venta.forEach(v=>{
+        total += v.precio;
+        html += `<div class="linea">${v.nombre} - ${v.precio.toFixed(2)}€</div>`;
+    });
+
+    document.getElementById("listaVenta").innerHTML = html || "Sin productos";
+    document.getElementById("total").innerText = total.toFixed(2)+"€";
 }
 
-function renderVenta() {
-  let html = "";
-  let total = 0;
-
-  venta.forEach(v => {
-    total += v.precio;
-   html += "<div class='linea'>" + v.nombre + " - " + v.precio.toFixed(2) + "€</div>";
-  });
-
-  document.getElementById("listaVenta").innerHTML = html || "Sin productos";
-  document.getElementById("total").innerText = total.toFixed(2) + "€";
+function vaciarVenta(){
+    venta = [];
+    renderVenta();
 }
 
-function vaciarVenta() {
-  venta = [];
-  renderVenta();
-}
+renderProductos();
+renderVenta();
 
 function cobrar(tipo) {
   if (venta.length === 0) return;
