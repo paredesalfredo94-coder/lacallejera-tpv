@@ -9,6 +9,15 @@ const productos = [
 ];
 
 let venta = [];
+let historial = JSON.parse(localStorage.getItem("historial")) || [];
+let cajaDia = Number(localStorage.getItem("cajaDia")) || 0;
+let fondoCaja = Number(localStorage.getItem("fondoCaja")) || 0;
+
+function guardarTodo(){
+    localStorage.setItem("historial", JSON.stringify(historial));
+    localStorage.setItem("cajaDia", cajaDia);
+    localStorage.setItem("fondoCaja", fondoCaja);
+}
 
 function renderProductos() {
     let html = "";
@@ -48,10 +57,8 @@ function vaciarVenta(){
     renderVenta();
 }
 
-renderProductos();
-renderVenta();
-
 function cobrar(tipo) {
+
   if (venta.length === 0) return;
 
   let total = venta.reduce((a, b) => a + b.precio, 0);
@@ -76,9 +83,11 @@ function cobrar(tipo) {
 }
 
 function renderHistorial() {
+
   let html = "";
 
-  historial.slice(0, 10).forEach(h => {
+  historial.slice(0,10).forEach(h => {
+
     html += `
       <div class="ticket-item">
         ${h.fecha}<br>
@@ -91,10 +100,30 @@ function renderHistorial() {
 }
 
 function renderCaja() {
-  document.getElementById("cajaDia").innerText = cajaDia.toFixed(2) + "€";
+  let totalCaja = cajaDia + fondoCaja;
+  document.getElementById("cajaDia").innerText = totalCaja.toFixed(2) + "€";
+}
+
+function ponerFondoCaja(){
+
+    let cantidad = prompt("Cantidad fondo caja:");
+
+    if(!cantidad) return;
+
+    cantidad = Number(cantidad);
+
+    if(isNaN(cantidad)) return;
+
+    fondoCaja += cantidad;
+
+    guardarTodo();
+    renderCaja();
+
+    alert("Fondo agregado correctamente");
 }
 
 function descargarCSV() {
+
   let texto = "Fecha,Metodo,Total\n";
 
   historial.forEach(h => {
@@ -109,6 +138,7 @@ function descargarCSV() {
 }
 
 function descargarTicket(t) {
+
   let texto = "LA CALLEJERA\n\n";
   texto += t.fecha + "\n\n";
 
@@ -127,6 +157,7 @@ function descargarTicket(t) {
 }
 
 function adminLogin() {
+
   let pass = prompt("Contraseña admin:");
 
   if (pass === "callejera2026") {
@@ -137,6 +168,7 @@ function adminLogin() {
 }
 
 function adminPanel() {
+
   let nombre = prompt("Nuevo producto:");
   if (!nombre) return;
 
@@ -147,16 +179,12 @@ function adminPanel() {
     precio: precio
   });
 
-  guardarTodo();
   renderProductos();
 }
 
-renderProductos();
-renderVenta();
-renderHistorial();
-renderCaja();
-
 function imprimirTicket(){
+
+if(venta.length === 0) return;
 
 let fecha = new Date().toLocaleString();
 
@@ -202,6 +230,7 @@ text-align:right;
 let total = 0;
 
 venta.forEach(v=>{
+
     total += v.precio;
 
     contenido += `
@@ -227,3 +256,8 @@ win.document.write(contenido);
 win.document.close();
 win.print();
 }
+
+renderProductos();
+renderVenta();
+renderHistorial();
+renderCaja();
