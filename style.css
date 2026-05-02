@@ -93,7 +93,7 @@ grid-auto-rows:190px;
 
 /* PRODUCTO */
 
-..grid button{
+.grid button{
 background:#111;
 border:2px solid #ff3b00;
 border-radius:18px;
