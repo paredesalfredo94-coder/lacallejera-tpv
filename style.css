@@ -92,22 +92,33 @@ body{
 /* PRODUCTO */
 
 .grid button{
-    background:linear-gradient(180deg,#111,#1b1b1b);
-    border:2px solid #ff3b00;
-    color:white;
-    padding:28px 10px;
-    border-radius:16px;
-    font-size:24px;
-    font-weight:800;
-    cursor:pointer;
-    transition:0.25s;
-    min-height:120px;
+background:linear-gradient(180deg,#111,#1b1b1b);
+border:2px solid #ff3b00;
+color:white;
+padding:12px;
+border-radius:18px;
+font-size:26px;
+font-weight:800;
+cursor:pointer;
+transition:0.25s;
+min-height:170px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+gap:8px;
 }
 
 .grid button:hover{
-    transform:scale(1.04);
-    box-shadow:0 0 18px rgba(255,60,0,0.45);
-    background:#220000;
+transform:scale(1.04);
+box-shadow:0 0 18px rgba(255,60,0,0.45);
+background:#220000;
+}
+
+.grid button img{
+width:95px;
+height:95px;
+object-fit:contain;
 }
 
 /* BOTONES COBRO */
