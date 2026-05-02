@@ -20,11 +20,11 @@ function guardarTodo(){
 }
 
 function renderProductos() {
-    let html = "";
+let html = "";
 
-    productos.forEach((p,i)=>{
+productos.forEach((p,i)=>{
 
-        html += `
+html += `
 <button onclick="agregarProducto(${i})">
 
 <img src="${p.imagen}">
@@ -37,7 +37,9 @@ function renderProductos() {
 </button>
 `;
 
-    document.getElementById("productosGrid").innerHTML = html;
+});
+
+document.getElementById("productosGrid").innerHTML = html;
 }
 
 function agregarProducto(i){
