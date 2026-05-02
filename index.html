@@ -2,222 +2,67 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>La Callejera TPV PRO MAX</title>
-
-<style>
-*{box-sizing:border-box}
-body{
-margin:0;
-font-family:Arial,Helvetica,sans-serif;
-background:#0d0d0d;
-color:white;
-}
-header{
-background:#c1121f;
-padding:18px;
-text-align:center;
-font-size:28px;
-font-weight:700;
-}
-.wrap{
-display:grid;
-grid-template-columns:2fr 1fr;
-gap:15px;
-padding:15px;
-max-width:1300px;
-margin:auto;
-}
-.panel{
-background:#161616;
-padding:15px;
-border-radius:14px;
-border:1px solid #2b2b2b;
-}
-.grid{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:12px;
-}
-button{
-border:none;
-padding:16px;
-border-radius:12px;
-font-size:17px;
-font-weight:700;
-cursor:pointer;
-}
-.product{
-background:#1f1f1f;
-color:white;
-border:1px solid #c1121f;
-}
-.pay{
-background:#c1121f;
-color:white;
-}
-.sec{
-background:#333;
-color:white;
-}
-.total{
-font-size:34px;
-font-weight:800;
-text-align:center;
-color:#ff5b5b;
-margin:15px 0;
-}
-.small{font-size:14px;color:#ccc}
-.box{
-background:#222;
-padding:10px;
-border-radius:10px;
-margin-top:8px;
-}
-@media(max-width:900px){
-.wrap{grid-template-columns:1fr}
-}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<header>🍔 LA CALLEJERA TPV PRO MAX</header>
+<header class="topbar">
+    <div class="logo-zone">
+        <img src="https://i.imgur.com/7bK0YFQ.png" class="logo">
+        <div>
+            <h1>LA CALLEJERA</h1>
+            <p>TPV PRO MAX</p>
+        </div>
+    </div>
 
-<div class="wrap">
+    <div class="cash-box">
+        Caja del día:
+        <span id="cajaDia">0.00€</span>
+    </div>
+</header>
 
-<div class="panel">
-<h2>Productos</h2>
+<main class="container">
 
-<div class="grid">
-<button class="product" onclick="add('Clásica',8.5)">Clásica<br>8,50€</button>
-<button class="product" onclick="add('Clásica doble',10)">Clásica doble<br>10€</button>
-<button class="product" onclick="add('Puro lomito',12)">Puro lomito<br>12€</button>
-<button class="product" onclick="add('Desmechadita',12)">Desmechadita<br>12€</button>
-<button class="product" onclick="add('Mixta',14)">Mixta<br>14€</button>
-<button class="product" onclick="add('Coca-Cola Original',2)">Coca-Cola Original<br>2€</button>
-<button class="product" onclick="add('Coca-Cola Zero',2)">Coca-Cola Zero<br>2€</button>
+<section class="productos">
+<h2>🍔 Productos</h2>
+
+<div class="grid" id="productosGrid"></div>
+
+<div class="acciones">
+<button onclick="cobrar('Efectivo')">💵 Efectivo</button>
+<button onclick="cobrar('Tarjeta')">💳 Tarjeta</button>
+<button onclick="cobrar('Bizum')">📱 Bizum</button>
+<button class="danger" onclick="vaciarVenta()">🗑️ Borrar</button>
 </div>
 
-<h3 style="margin-top:20px">Cobrar</h3>
-
-<div class="grid">
-<button class="pay" onclick="pay('Efectivo')">💵 Efectivo</button>
-<button class="pay" onclick="pay('Tarjeta')">💳 Tarjeta</button>
-<button class="pay" onclick="pay('Bizum')">📱 Bizum</button>
-<button class="sec" onclick="clearSale()">🗑️ Borrar</button>
-<button class="sec" onclick="downloadCSV()">📁 Descargar ventas</button>
-<button class="sec" onclick="resetAll()">♻️ Reiniciar día</button>
+<div class="extra">
+<button onclick="descargarCSV()">📁 Descargar ventas</button>
+<button onclick="adminLogin()">🔒 Admin</button>
 </div>
 
-</div>
+</section>
 
-<div class="panel">
+<section class="ticket">
+<h2>🛒 Venta actual</h2>
 
-<h2>Venta actual</h2>
-<div id="sale" class="small">Sin productos</div>
+<div id="listaVenta"></div>
 
+<h3>Total:</h3>
 <div class="total" id="total">0.00€</div>
 
+<hr>
+
 <h3>Historial</h3>
-<div id="history" class="small">Sin ventas aún</div>
+<div id="historial"></div>
 
-<div class="box">💶 Caja del día: <span id="cash">0.00</span>€</div>
-<div class="box">🧾 Ventas: <span id="count">0</span></div>
+</section>
 
-</div>
+</main>
 
-</div>
-
-<script>
-let items=[];
-let total=0;
-let history=JSON.parse(localStorage.getItem("history"))||[];
-let cash=parseFloat(localStorage.getItem("cash"))||0;
-let count=parseInt(localStorage.getItem("count"))||0;
-
-function saveData(){
-localStorage.setItem("history",JSON.stringify(history));
-localStorage.setItem("cash",cash);
-localStorage.setItem("count",count);
-}
-
-function add(name,price){
-items.push({name,price});
-total+=price;
-render();
-}
-
-function clearSale(){
-items=[];
-total=0;
-render();
-}
-
-function pay(method){
-if(total<=0)return;
-
-let now=new Date();
-let date=now.toLocaleDateString();
-let time=now.toLocaleTimeString();
-
-let products=items.map(i=>i.name).join(" + ");
-
-let line={
-date,time,method,total:total.toFixed(2),products
-};
-
-history.unshift(line);
-cash+=total;
-count++;
-
-saveData();
-clearSale();
-render();
-}
-
-function render(){
-document.getElementById("sale").innerHTML=
-items.length?items.map(i=>"• "+i.name+" - "+i.price.toFixed(2)+"€").join("<br>"):"Sin productos";
-
-document.getElementById("total").innerHTML=total.toFixed(2)+"€";
-
-document.getElementById("history").innerHTML=
-history.length?
-history.slice(0,8).map(h=>
-h.date+" "+h.time+" - "+h.method+" - "+h.total+"€<br><span style='color:#888'>"+h.products+"</span><br><br>"
-).join("")
-:"Sin ventas aún";
-
-document.getElementById("cash").innerHTML=cash.toFixed(2);
-document.getElementById("count").innerHTML=count;
-}
-
-function downloadCSV(){
-let csv="Fecha,Hora,Metodo,Total,Productos\n";
-
-history.forEach(h=>{
-csv+=${h.date},${h.time},${h.method},${h.total},${h.products}\n;
-});
-
-let blob=new Blob([csv],{type:"text/csv"});
-let a=document.createElement("a");
-a.href=URL.createObjectURL(blob);
-a.download="ventas_lacallejera.csv";
-a.click();
-}
-
-function resetAll(){
-if(confirm("¿Reiniciar caja del día?")){
-history=[];
-cash=0;
-count=0;
-saveData();
-render();
-}
-}
-
-render();
-</script>
+<script src="app.js"></script>
 
 </body>
 </html>
