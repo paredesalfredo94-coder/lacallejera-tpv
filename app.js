@@ -155,3 +155,75 @@ renderProductos();
 renderVenta();
 renderHistorial();
 renderCaja();
+
+function imprimirTicket(){
+
+let fecha = new Date().toLocaleString();
+
+let contenido = `
+<html>
+<head>
+<title>Ticket</title>
+<style>
+body{
+font-family: monospace;
+padding:20px;
+font-size:18px;
+width:300px;
+}
+h2,h3{
+text-align:center;
+margin:5px 0;
+}
+.linea{
+display:flex;
+justify-content:space-between;
+margin:6px 0;
+}
+hr{
+margin:10px 0;
+}
+.total{
+font-size:24px;
+font-weight:bold;
+text-align:right;
+}
+</style>
+</head>
+<body>
+
+<h2>LA CALLEJERA</h2>
+<h3>TPV PRO MAX</h3>
+<hr>
+<div>${fecha}</div>
+<hr>
+`;
+
+let total = 0;
+
+venta.forEach(v=>{
+    total += v.precio;
+
+    contenido += `
+    <div class="linea">
+        <span>${v.nombre}</span>
+        <span>${v.precio.toFixed(2)}€</span>
+    </div>
+    `;
+});
+
+contenido += `
+<hr>
+<div class="total">TOTAL: ${total.toFixed(2)}€</div>
+<hr>
+<h3>Gracias por su compra</h3>
+
+</body>
+</html>
+`;
+
+let win = window.open("", "", "width=350,height=700");
+win.document.write(contenido);
+win.document.close();
+win.print();
+}
