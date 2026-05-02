@@ -1,11 +1,11 @@
 const productos = [
- {nombre:"Clásica", precio:8.50},
- {nombre:"Clásica doble", precio:10.00},
- {nombre:"Puro lomito", precio:12.00},
- {nombre:"Desmechadita", precio:12.00},
- {nombre:"Mixta", precio:14.00},
- {nombre:"Coca-Cola Original", precio:2.00},
- {nombre:"Coca-Cola Zero", precio:2.00}
+ {nombre:"Clásica", precio:8.50, img:"clasica.png"},
+ {nombre:"Clásica doble", precio:10.00, img:"doble.png"},
+ {nombre:"Puro lomito", precio:12.00, img:"lomito.png"},
+ {nombre:"Desmechadita", precio:12.00, img:"desmecha.png"},
+ {nombre:"Mixta", precio:14.00, img:"mixta.png"},
+ {nombre:"Coca-Cola Original", precio:2.00, img:"cocacola.png"},
+ {nombre:"Coca-Cola Zero", precio:2.00, img:"zero.png"}
 ];
 
 let venta = [];
@@ -25,8 +25,9 @@ function renderProductos() {
     productos.forEach((p,i)=>{
         html += `
         <button onclick="agregarProducto(${i})">
-            ${p.nombre}<br>
-            ${p.precio.toFixed(2)}€
+           <img src="${p.img}" class="fotoProducto">
+${p.nombre}<br>
+${p.precio.toFixed(2)}€
         </button>
         `;
     });
