@@ -1,11 +1,11 @@
 const productos = [
- {nombre:"Clásica", precio:8.50, imagen:"clasica.png.jpeg"},
- {nombre:"Clásica doble", precio:10.00, imagen:"clasica-doble.png.jpeg"},
- {nombre:"Puro lomito", precio:12.00, imagen:"puro-lomito.png.jpeg"},
- {nombre:"Desmechadita", precio:12.00, imagen:"desmechadita.png.jpeg"},
- {nombre:"Mixta", precio:14.00, imagen:"mixta.png.jpeg"},
- {nombre:"Coca-Cola Original", precio:2.00, imagen:"coca-original.png.jpeg"},
- {nombre:"Coca-Cola Zero", precio:2.00, imagen:"coca-zero.png.jpeg"}
+ {nombre:"Clásica", precio:8.50, imagen:"img/clasica.png.jpeg"},
+ {nombre:"Clásica doble", precio:10.00, imagen:"img/clasica-doble.png.jpeg"},
+ {nombre:"Puro lomito", precio:12.00, imagen:"img/puro-lomito.png.jpeg"},
+ {nombre:"Desmechadita", precio:12.00, imagen:"img/desmechadita.png.jpeg"},
+ {nombre:"Mixta", precio:14.00, imagen:"img/mixta.png.jpeg"},
+ {nombre:"Coca-Cola Original", precio:2.00, imagen:"img/coca-original.png.jpeg"},
+ {nombre:"Coca-Cola Zero", precio:2.00, imagen:"img/coca-zero.png.jpeg"}
 ];
 
 let venta = [];
