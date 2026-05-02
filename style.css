@@ -227,3 +227,11 @@ button{
     font-size:20px;
 }
 }
+.fotoProducto{
+width:90px;
+height:70px;
+object-fit:contain;
+display:block;
+margin:auto;
+margin-bottom:8px;
+}
