@@ -20,15 +20,20 @@ function guardarTodo() {
 }
 
 function renderProductos() {
-  let html = "";
 
-  productos.forEach((p, i) => {
-    html += `
-      <div class="item" onclick="agregar(${i})">
-        ${p.nombre}<br>${p.precio.toFixed(2)}€
-      </div>
-    `;
-  });
+    let html = "";
+
+    productos.forEach((p, i) => {
+        html += `
+        <button onclick="agregarProducto(${i})">
+            ${p.nombre}<br>
+            ${p.precio.toFixed(2)}€
+        </button>
+        `;
+    });
+
+    document.getElementById("productosGrid").innerHTML = html;
+}
 
   document.getElementById("productosGrid").innerHTML = html;
 }
