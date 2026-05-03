@@ -273,13 +273,10 @@ renderCaja();
 function cerrarCaja(){
 
     let historial = JSON.parse(localStorage.getItem("historial")) || [];
-
     let fondoCaja = Number(localStorage.getItem("fondoCaja")) || 0;
 
     let efectivo = 0;
-
     let tarjeta = 0;
-
     let bizum = 0;
 
     historial.forEach(v => {
@@ -287,43 +284,31 @@ function cerrarCaja(){
         let txt = v.toLowerCase();
 
         let cantidad = parseFloat(
-
             txt.match(/[\d]+(\.\d+)?€/)
-
             ? txt.match(/[\d]+(\.\d+)?€/)[0].replace("€","")
-
             : 0
-
         );
 
         if(txt.includes("efectivo")) efectivo += cantidad;
-
         if(txt.includes("tarjeta")) tarjeta += cantidad;
-
         if(txt.includes("bizum")) bizum += cantidad;
-
     });
 
     let totalVentas = efectivo + tarjeta + bizum;
-
     let cajaFisica = fondoCaja + efectivo;
 
     let resumen =
-
 `🔒 CIERRE DE CAJA
 
 📅 ${new Date().toLocaleDateString()}
 
 💵 Efectivo: ${efectivo.toFixed(2)}€
-
 💳 Tarjeta: ${tarjeta.toFixed(2)}€
-
 📱 Bizum: ${bizum.toFixed(2)}€
 
 🧾 TOTAL VENTAS: ${totalVentas.toFixed(2)}€
 
 💰 Fondo inicial: ${fondoCaja.toFixed(2)}€
-
 🏦 Caja esperada: ${cajaFisica.toFixed(2)}€
 
 ¿Cerrar caja ahora?`;
@@ -331,7 +316,6 @@ function cerrarCaja(){
     if(confirm(resumen)){
 
         localStorage.setItem("historial", JSON.stringify([]));
-
         localStorage.setItem("cajaDia", 0);
 
         venta = [];
