@@ -296,8 +296,7 @@ function cerrarCaja() {
     let totalVentas = efectivo + tarjeta + bizum;
     let cajaEsperada = fondoCaja + efectivo;
 
-    let resumen =
-`🔒 CIERRE DE CAJA
+    let resumen = `🔒 CIERRE DE CAJA
 
 📅 ${new Date().toLocaleDateString()}
 
@@ -311,7 +310,7 @@ function cerrarCaja() {
 🏦 Caja esperada: ${cajaEsperada.toFixed(2)}€
 
 ¿Cerrar caja ahora?`;
-
+ 
     if (confirm(resumen)) {
 
         localStorage.setItem("historial", JSON.stringify([]));
