@@ -146,19 +146,49 @@ function ponerFondoCaja(){
     alert("Fondo agregado correctamente");
 }
 
-function descargarCSV() {
+function descargarExcel() {
 
-  let texto = "Fecha,Metodo,Total\n";
+    let historial = JSON.parse(localStorage.getItem("historial")) || [];
 
-  historial.forEach(h => {
-    texto += `${h.fecha},${h.tipo},${h.total}\n`;
-  });
+    if (historial.length === 0) {
+        alert("No hay ventas para exportar");
+        return;
+    }
 
-  let blob = new Blob([texto], { type: "text/csv" });
-  let a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = "ventas.csv";
-  a.click();
+    let datos = [];
+
+    let totalEfectivo = 0;
+    let totalTarjeta = 0;
+    let totalBizum = 0;
+
+    historial.forEach(v => {
+        datos.push({
+            Fecha: v.fecha,
+            Metodo: v.tipo,
+            Total: v.total
+        });
+
+        if (v.tipo === "Efectivo") totalEfectivo += v.total;
+        if (v.tipo === "Tarjeta") totalTarjeta += v.total;
+        if (v.tipo === "Bizum") totalBizum += v.total;
+    });
+
+    let totalGeneral = totalEfectivo + totalTarjeta + totalBizum;
+
+    // Añadir resumen al final
+    datos.push({});
+    datos.push({ Fecha: "RESUMEN" });
+    datos.push({ Metodo: "Efectivo", Total: totalEfectivo });
+    datos.push({ Metodo: "Tarjeta", Total: totalTarjeta });
+    datos.push({ Metodo: "Bizum", Total: totalBizum });
+    datos.push({ Metodo: "TOTAL GENERAL", Total: totalGeneral });
+
+    let ws = XLSX.utils.json_to_sheet(datos);
+    let wb = XLSX.utils.book_new();
+
+    XLSX.utils.book_append_sheet(wb, ws, "Ventas");
+
+    XLSX.writeFile(wb, "cierre_caja.xlsx");
 }
 
 function descargarTicket(t) {
