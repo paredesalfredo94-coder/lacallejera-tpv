@@ -13,6 +13,22 @@ let historial = JSON.parse(localStorage.getItem("historial")) || [];
 let cajaDia = Number(localStorage.getItem("cajaDia")) || 0;
 let fondoCaja = Number(localStorage.getItem("fondoCaja")) || 0;
 
+function getFechaHoy() {
+    let hoy = new Date();
+    return hoy.toISOString().split("T")[0];
+}
+
+function verificarCambioDia() {
+    let ultimaFecha = localStorage.getItem("fechaCaja");
+    let hoy = getFechaHoy();
+
+    if (ultimaFecha !== hoy) {
+        localStorage.setItem("historial", JSON.stringify([]));
+        localStorage.setItem("cajaDia", 0);
+        localStorage.setItem("fechaCaja", hoy);
+    }
+}
+
 function guardarTodo(){
     localStorage.setItem("historial", JSON.stringify(historial));
     localStorage.setItem("cajaDia", cajaDia);
@@ -264,6 +280,8 @@ win.document.write(contenido);
 win.document.close();
 win.print();
 }
+
+verificarCambioDia();
 
 renderProductos();
 renderVenta();
