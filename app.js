@@ -272,12 +272,49 @@ renderCaja();
 
 function cerrarCaja(){
 
-alert(
-"CIERRE DE CAJA\n\n" +
-"Efectivo: 0€\n" +
-"Tarjeta: 0€\n" +
-"Bizum: 0€\n\n" +
-"Botón funcionando correctamente"
-);
+    let historial = JSON.parse(localStorage.getItem("historial")) || [];
+    let fondoCaja = Number(localStorage.getItem("fondoCaja")) || 0;
 
+    let efectivo = 0;
+    let tarjeta = 0;
+    let bizum = 0;
+
+    historial.forEach(function(v){
+
+        let txt = v.toLowerCase();
+
+        let numeros = txt.match(/[\d]+(\.\d+)?/g);
+        let cantidad = numeros ? parseFloat(numeros[numeros.length - 1]) : 0;
+
+        if(txt.includes("efectivo")) efectivo += cantidad;
+        if(txt.includes("tarjeta")) tarjeta += cantidad;
+        if(txt.includes("bizum")) bizum += cantidad;
+
+    });
+
+    let totalVentas = efectivo + tarjeta + bizum;
+    let cajaEsperada = fondoCaja + efectivo;
+
+    let resumen =
+        "CIERRE DE CAJA\n\n" +
+        "Efectivo: " + efectivo.toFixed(2) + "€\n" +
+        "Tarjeta: " + tarjeta.toFixed(2) + "€\n" +
+        "Bizum: " + bizum.toFixed(2) + "€\n\n" +
+        "TOTAL VENTAS: " + totalVentas.toFixed(2) + "€\n\n" +
+        "Fondo inicial: " + fondoCaja.toFixed(2) + "€\n" +
+        "Caja esperada: " + cajaEsperada.toFixed(2) + "€\n\n" +
+        "¿Cerrar caja?";
+
+    if(confirm(resumen)){
+
+        localStorage.setItem("historial", JSON.stringify([]));
+        localStorage.setItem("cajaDia", 0);
+
+        venta = [];
+        renderVenta();
+        renderHistorial();
+        renderCaja();
+
+        alert("✅ Caja cerrada correctamente");
+    }
 }
