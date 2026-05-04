@@ -281,14 +281,9 @@ function cerrarCaja(){
 
     historial.forEach(function(v){
 
-        let txt = v.toLowerCase();
-
-        let numeros = txt.match(/[\d]+(\.\d+)?/g);
-        let cantidad = numeros ? parseFloat(numeros[numeros.length - 1]) : 0;
-
-        if(txt.includes("efectivo")) efectivo += cantidad;
-        if(txt.includes("tarjeta")) tarjeta += cantidad;
-        if(txt.includes("bizum")) bizum += cantidad;
+        if(v.tipo === "Efectivo") efectivo += v.total;
+        if(v.tipo === "Tarjeta") tarjeta += v.total;
+        if(v.tipo === "Bizum") bizum += v.total;
 
     });
 
@@ -307,6 +302,7 @@ function cerrarCaja(){
 
     if(confirm(resumen)){
 
+        // 🔥 limpiar ventas del día
         localStorage.setItem("historial", JSON.stringify([]));
         localStorage.setItem("cajaDia", 0);
 
