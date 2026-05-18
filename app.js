@@ -83,27 +83,32 @@ function vaciarVenta(){
 
 function cobrar(tipo) {
 
-  if (venta.length === 0) return;
-
-  let total = venta.reduce((a, b) => a + b.precio, 0);
-
-  let ticket = {
-    fecha: new Date().toLocaleString(),
-    tipo: tipo,
-    productos: [...venta],
-    total: total
-  };
-
   historial.unshift(ticket);
-  cajaDia += total;
+cajaDia += total;
 
-  guardarTodo();
-  renderHistorial();
-  renderCaja();
-  descargarTicket(ticket);
+guardarTodo();
+renderHistorial();
+renderCaja();
+descargarTicket(ticket);
 
-  venta = [];
-  renderVenta();
+// ENVIAR PEDIDO AL BACKEND
+fetch("https://system-burger-tpv-api.zklm7v.easypanel.host/pedido", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify(ticket)
+})
+.then(res => res.json())
+.then(data => {
+    console.log("Pedido enviado:", data);
+})
+.catch(err => {
+    console.error("Error enviando pedido:", err);
+});
+
+venta = [];
+renderVenta();
 }
 
 function renderHistorial() {
