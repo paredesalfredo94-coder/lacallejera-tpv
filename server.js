@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const { Pool } = require("pg");
+const fetch = require("node-fetch");
 
 const app = express();
 
@@ -31,6 +32,33 @@ app.post("/pedido", (req, res) => {
     pedidos.push(pedido);
 
     console.log("Nuevo pedido:", pedido);
+  try {
+
+    await fetch("TU_URL_DE_EVOLUTION/sendText/NUMERO", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "apikey": "TU_API_KEY"
+        },
+        body: JSON.stringify({
+            text:
+`🍔 NUEVO PEDIDO
+
+💳 Pago: ${pedido.tipo}
+💰 Total: ${pedido.total}€
+
+🧾 Productos:
+${pedido.productos.map(p => `• ${p.nombre}`).join("\n")}`
+        })
+    });
+
+    console.log("WhatsApp enviado");
+
+} catch(err) {
+
+    console.log("Error WhatsApp:", err);
+
+}
 
     res.json({
         ok: true,
