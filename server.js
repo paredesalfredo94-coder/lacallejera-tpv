@@ -32,29 +32,32 @@ app.post("/pedido", async (req, res) => {
     pedidos.push(pedido);
 
     console.log("Nuevo pedido:", pedido);
-  try {
+ try {
 
-    await fetch("TU_URL_DE_EVOLUTION/sendText/NUMERO", {
+    await fetch("http://evolution-api:8080/message/sendText/System_burger", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "apikey": "TU_API_KEY"
+            "apikey": "429683C4C977415CAAFCCE10F7D57E11"
         },
+
         body: JSON.stringify({
-            text:
-`🍔 NUEVO PEDIDO
+            number: "34641230579",
+            text: `🍔 NUEVO PEDIDO
 
 💳 Pago: ${pedido.tipo}
+
 💰 Total: ${pedido.total}€
 
-🧾 Productos:
-${pedido.productos.map(p => `• ${p.nombre}`).join("\n")}`
+📄 Productos:
+${pedido.productos.map(p => `• ${p.nombre}`).join("\n")}
+`
         })
     });
 
     console.log("WhatsApp enviado");
 
-} catch(err) {
+} catch (err) {
 
     console.log("Error WhatsApp:", err);
 
