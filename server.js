@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
     res.send("Backend TPV activo");
 });
 
-app.post("/pedido", (req, res) => {
+app.post("/pedido", async (req, res) => {
 
     console.log("BODY:", req.body);
   
