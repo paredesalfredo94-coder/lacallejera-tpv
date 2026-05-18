@@ -14,6 +14,7 @@ const pool = new Pool({
 
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 let pedidos = [];
 
@@ -23,6 +24,8 @@ app.get("/", (req, res) => {
 
 app.post("/pedido", (req, res) => {
 
+    console.log("BODY:", req.body);
+  
     const pedido = req.body;
 
     pedidos.push(pedido);
