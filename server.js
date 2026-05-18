@@ -43,6 +43,8 @@ app.get("/pedidos", (req, res) => {
     res.json(pedidos);
 });
 
-app.listen(3001, () => {
-    console.log("Servidor funcionando puerto 3001");
+const PORT = process.env.PORT || 3001;
+
+app.listen(PORT, () => {
+    console.log("Servidor funcionando puerto " + PORT);
 });
