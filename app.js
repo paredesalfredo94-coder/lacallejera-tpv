@@ -166,7 +166,7 @@ function descargarExcel() {
     XLSX.writeFile(wb, "cierre_caja.xlsx");
 }
 
-async function cobrar(tipo) {
+ function cobrar(tipo) {
 
   if (venta.length === 0) return;
 
@@ -187,20 +187,20 @@ async function cobrar(tipo) {
   renderCaja();
 
   // ENVIAR PEDIDO AL BACKEND
-  await fetch("https://system-burger-tpv-api.zklm7v.easypanel.host/pedido", {
-      method: "POST",
-      headers: {
-          "Content-Type": "application/json"
-      },
-      body: JSON.stringify(ticket)
-  })
-  .then(res => res.json())
-  .then(data => {
-      console.log("Pedido enviado:", data);
-  })
-  .catch(err => {
-      console.error("Error enviando pedido:", err);
-  });
+ fetch("https://system-burger-tpv-api.zklm7v.easypanel.host/pedido", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify(ticket)
+})
+.then(res => res.json())
+.then(data => {
+    console.log("Pedido enviado", data);
+})
+.catch(err => {
+    console.log("ERROR FETCH", err);
+});
 
   descargarTicket(ticket);
 
