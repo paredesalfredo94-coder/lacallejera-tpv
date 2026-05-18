@@ -81,7 +81,7 @@ function vaciarVenta(){
     renderVenta();
 }
 
-function cobrar(tipo) {
+async function cobrar(tipo) {
 
   historial.unshift(ticket);
 cajaDia += total;
@@ -92,7 +92,7 @@ renderCaja();
 descargarTicket(ticket);
 
 // ENVIAR PEDIDO AL BACKEND
-fetch("https://system-burger-tpv-api.zklm7v.easypanel.host/pedido", {
+await fetch("https://system-burger-tpv-api.zklm7v.easypanel.host/pedido", {
     method: "POST",
     headers: {
         "Content-Type": "application/json"
