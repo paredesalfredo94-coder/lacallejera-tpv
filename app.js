@@ -187,7 +187,7 @@ function descargarExcel() {
   renderCaja();
 
   // ENVIAR PEDIDO AL BACKEND
- fetch("https://system-burger-tpv-api.zklm7v.easypanel.host/pedido", {
+ fetch("/pedido", {
     method: "POST",
     headers: {
         "Content-Type": "application/json"
