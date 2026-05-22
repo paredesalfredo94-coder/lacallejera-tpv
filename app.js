@@ -1,11 +1,133 @@
 const productos = [
- {nombre:"Clásica", precio:8.50, imagen:"img/clasica.png.jpeg"},
- {nombre:"Clásica doble", precio:10.00, imagen:"img/clasica-doble.png.jpeg"},
- {nombre:"Puro lomito", precio:12.00, imagen:"img/puro-lomito.png.jpeg"},
- {nombre:"Desmechadita", precio:12.00, imagen:"img/desmechadita.png.jpeg"},
- {nombre:"Mixta", precio:14.00, imagen:"img/mixta.png.jpeg"},
- {nombre:"Coca-Cola Original", precio:2.00, imagen:"img/coca-original.png.jpeg"},
- {nombre:"Coca-Cola Zero", precio:2.00, imagen:"img/coca-zero.png.jpeg"}
+
+{
+categoria:"🍔 Hamburguesas",
+nombre:"La clásica de la calle",
+precio:8.50,
+imagen:"img/clasica.png.jpeg"
+},
+
+{
+categoria:"🍔 Hamburguesas",
+nombre:"La clásica de la calle doble",
+precio:10.00,
+imagen:"img/clasica-doble.png.jpeg"
+},
+
+{
+categoria:"🍔 Hamburguesas",
+nombre:"Puro lomito",
+precio:12.00,
+imagen:"img/puro-lomito.png.jpeg"
+},
+
+{
+categoria:"🍔 Hamburguesas",
+nombre:"Desmechadita",
+precio:12.00,
+imagen:"img/desmechadita.png.jpeg"
+},
+
+{
+categoria:"🍔 Hamburguesas",
+nombre:"La mixta de la calle",
+precio:14.00,
+imagen:"img/mixta.png.jpeg"
+},
+
+
+
+// MENÚS
+
+{
+categoria:"📦 Menús",
+nombre:"Menú clásico",
+precio:12.00,
+imagen:"img/menu-clasico.png.jpeg"
+},
+
+{
+categoria:"📦 Menús",
+nombre:"Menú doble",
+precio:13.50,
+imagen:"img/menu-doble.png.jpeg"
+},
+
+{
+categoria:"📦 Menús",
+nombre:"Menú lomito",
+precio:15.00,
+imagen:"img/menu-lomito.png.jpeg"
+},
+
+{
+categoria:"📦 Menús",
+nombre:"Menú desmechada",
+precio:15.00,
+imagen:"img/menu-desmechada.png.jpeg"
+},
+
+{
+categoria:"📦 Menús",
+nombre:"Menú mixta",
+precio:16.50,
+imagen:"img/menu-mixta.png.jpeg"
+},
+
+
+
+// COMPLEMENTOS
+
+{
+categoria:"🍟 Complementos",
+nombre:"Patatas fritas",
+precio:1.50,
+imagen:"img/patatas.png.jpeg"
+},
+
+
+
+// BEBIDAS
+
+{
+categoria:"🥤 Bebidas",
+nombre:"Coca-Cola",
+precio:2.00,
+imagen:"img/coca-cola.png.jpeg"
+},
+
+
+
+// EXTRAS
+
+{
+categoria:"➕ Extras",
+nombre:"Extra queso cheddar",
+precio:0.50,
+imagen:"img/cheddar.png.jpeg"
+},
+
+{
+categoria:"➕ Extras",
+nombre:"Extra bacon",
+precio:0.50,
+imagen:"img/bacon.png.jpeg"
+},
+
+{
+categoria:"➕ Extras",
+nombre:"Extra pepinillos",
+precio:0.50,
+imagen:"img/pepinillos.png.jpeg"
+},
+
+{
+categoria:"➕ Extras",
+nombre:"Extra huevo",
+precio:0.50,
+imagen:"img/huevo.png.jpeg"
+}
+
 ];
 
 let venta = [];
@@ -36,26 +158,45 @@ function guardarTodo(){
 }
 
 function renderProductos() {
+
 let html = "";
 
-productos.forEach((p,i)=>{
+const categorias = [...new Set(productos.map(p => p.categoria))];
+
+categorias.forEach(categoria => {
 
 html += `
-<button onclick="agregarProducto(${i})">
+<div class="categoria-titulo">
+${categoria}
+</div>
+
+<div class="categoria-grid">
+`;
+
+productos
+.filter(p => p.categoria === categoria)
+.forEach((p, i) => {
+
+html += `
+<div class="producto" onclick="agregarProducto(${productos.indexOf(p)})">
 
 <img src="${p.imagen}">
 
-<div class="infoProducto">
-<div class="tituloProducto">${p.nombre}</div>
-<div class="precioProducto">${p.precio.toFixed(2)}€</div>
-</div>
+<h3>${p.nombre}</h3>
 
-</button>
+<p>${p.precio.toFixed(2)}€</p>
+
+</div>
 `;
 
 });
 
+html += `</div>`;
+
+});
+
 document.getElementById("productosGrid").innerHTML = html;
+
 }
 
 function agregarProducto(i){
