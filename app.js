@@ -134,6 +134,7 @@ let venta = [];
 let historial = JSON.parse(localStorage.getItem("historial")) || [];
 let cajaDia = Number(localStorage.getItem("cajaDia")) || 0;
 let fondoCaja = Number(localStorage.getItem("fondoCaja")) || 0;
+let extrasRapidos = [];
 
 function getFechaHoy() {
     let hoy = new Date();
@@ -200,8 +201,82 @@ document.getElementById("productosGrid").innerHTML = html;
 }
 
 function agregarProducto(i){
-    venta.push(productos[i]);
-    renderVenta();
+
+const producto = productos[i];
+
+venta.push(producto);
+
+renderVenta();
+
+
+// SOLO hamburguesas y menús
+
+if(
+producto.categoria === "🍔 Hamburguesas" ||
+producto.categoria === "📦 Menús"
+){
+
+mostrarExtras();
+
+}
+
+}
+
+function mostrarExtras(){
+
+const agregarQueso = confirm("¿Agregar queso cheddar +0.50€?");
+
+if(agregarQueso){
+
+venta.push({
+nombre:"Extra queso cheddar",
+precio:0.50,
+imagen:"img/cheddar.png.jpeg"
+});
+
+}
+
+
+const agregarBacon = confirm("¿Agregar bacon +0.50€?");
+
+if(agregarBacon){
+
+venta.push({
+nombre:"Extra bacon",
+precio:0.50,
+imagen:"img/bacon.png.jpeg"
+});
+
+}
+
+
+const agregarPepinillos = confirm("¿Agregar pepinillos +0.50€?");
+
+if(agregarPepinillos){
+
+venta.push({
+nombre:"Extra pepinillos",
+precio:0.50,
+imagen:"img/pepinillos.png.jpeg"
+});
+
+}
+
+
+const agregarHuevo = confirm("¿Agregar huevo +0.50€?");
+
+if(agregarHuevo){
+
+venta.push({
+nombre:"Extra huevo",
+precio:0.50,
+imagen:"img/huevo.png.jpeg"
+});
+
+}
+
+renderVenta();
+
 }
 
 function renderVenta(){
