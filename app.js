@@ -216,8 +216,8 @@ producto.categoria === "📦 Menús"
 mostrarExtras();
 
 }
-
-
+}
+{
 
 // SOLO hamburguesas y menús
 
@@ -229,7 +229,7 @@ producto.categoria === "📦 Menús"
 mostrarExtras();
 
 }
-
+}
 
 
 let extrasSeleccionados = [];
