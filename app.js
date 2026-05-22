@@ -260,14 +260,14 @@ extrasSeleccionados.filter(e => e.nombre !== nombre);
 }else{
 
 extrasSeleccionados.push({
-nombre,
-precio,
+nombre:nombre,
+precio:precio,
 imagen:""
 });
 
 }
 
-
+}
 
 
 function confirmarExtras(){
