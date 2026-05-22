@@ -102,9 +102,10 @@ align-items:start;
 }
 
 .producto{
-min-width:140px;
-max-width:140px;
-height:190px;
+min-width:170px;
+max-width:170px;
+
+height:210px;
 
 background:#111;
 border:2px solid #ff3b00;
@@ -122,7 +123,6 @@ transition:.2s;
 
 flex-shrink:0;
 }
-
 .producto:hover{
 transform:scale(1.03);
 box-shadow:0 0 20px rgba(255,60,0,.45);
@@ -328,11 +328,15 @@ border:2px solid #ff3c00;
 .categoria-grid{
 display:flex;
 gap:15px;
+
 overflow-x:auto;
 overflow-y:hidden;
+
 padding:10px;
-margin-bottom:20px;
-width:100%;
+
+width:calc(100vw - 420px);
+
+min-width:0;
 }
 
 .extras-modal{
