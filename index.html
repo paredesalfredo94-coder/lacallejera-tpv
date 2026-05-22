@@ -8,6 +8,48 @@
 <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 </head>
 
+<div id="extrasModal" class="extras-modal">
+
+<div class="extras-box">
+
+<h2>➕ Selecciona extras</h2>
+
+<div class="extras-grid">
+
+<button class="extra-btn" onclick="toggleExtra(this,'Extra queso cheddar',0.50)">
+🧀 Queso +0.50€
+</button>
+
+<button class="extra-btn" onclick="toggleExtra(this,'Extra bacon',0.50)">
+🥓 Bacon +0.50€
+</button>
+
+<button class="extra-btn" onclick="toggleExtra(this,'Extra pepinillos',0.50)">
+🥒 Pepinillos +0.50€
+</button>
+
+<button class="extra-btn" onclick="toggleExtra(this,'Extra huevo',0.50)">
+🍳 Huevo +0.50€
+</button>
+
+</div>
+
+<div class="extras-actions">
+
+<button class="cancelar-btn" onclick="cerrarExtras()">
+Cancelar
+</button>
+
+<button class="agregar-btn" onclick="confirmarExtras()">
+Agregar extras
+</button>
+
+</div>
+
+</div>
+
+</div>
+    
 <body>
 
 <header class="topbar">
