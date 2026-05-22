@@ -64,7 +64,7 @@ body{
 
 .container{
     display:grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 4fr 1fr;
     gap:22px;
 }
 
@@ -334,9 +334,8 @@ overflow-y:hidden;
 
 padding:10px;
 
-width:calc(100vw - 420px);
-
-min-width:0;
+width:100%;
+flex:1;
 }
 
 .extras-modal{
