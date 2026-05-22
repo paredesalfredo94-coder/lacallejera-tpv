@@ -179,15 +179,23 @@ productos
 .forEach((p, i) => {
 
 html += `
-<div class="producto" onclick="agregarProducto(${productos.indexOf(p)})">
+<button class="producto" onclick="agregarProducto(${productos.indexOf(p)})">
 
 <img src="${p.imagen}">
 
-<h3>${p.nombre}</h3>
+<div class="infoProducto">
 
-<p>${p.precio.toFixed(2)}€</p>
+<div class="tituloProducto">
+${p.nombre}
+</div>
+
+<div class="precioProducto">
+${p.precio.toFixed(2)}€
+</div>
 
 </div>
+
+</button>
 `;
 
 });
