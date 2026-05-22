@@ -158,25 +158,31 @@ function guardarTodo(){
     localStorage.setItem("fondoCaja", fondoCaja);
 }
 
+let categoriaActual = "🍔 Hamburguesas";
+
 function renderProductos() {
 
 let html = "";
 
-const categorias = [...new Set(productos.map(p => p.categoria))];
-
-categorias.forEach(categoria => {
+/* BOTONES CATEGORÍAS */
 
 html += `
-<div class="categoria-titulo">
-${categoria}
+<div class="tabsCategorias">
+<button onclick="cambiarCategoria('🍔 Hamburguesas')">🍔 Hamburguesas</button>
+<button onclick="cambiarCategoria('📦 Menús')">📦 Menús</button>
+<button onclick="cambiarCategoria('🍟 Complementos')">🍟 Complementos</button>
+<button onclick="cambiarCategoria('🥤 Bebidas')">🥤 Bebidas</button>
+<button onclick="cambiarCategoria('➕ Extras')">➕ Extras</button>
 </div>
 
-<div class="categoria-grid">
+<div class="grid">
 `;
 
+/* PRODUCTOS */
+
 productos
-.filter(p => p.categoria === categoria)
-.forEach((p, i) => {
+.filter(p => p.categoria === categoriaActual)
+.forEach((p) => {
 
 html += `
 <button class="producto" onclick="agregarProducto(${productos.indexOf(p)})">
@@ -202,12 +208,17 @@ ${p.precio.toFixed(2)}€
 
 html += `</div>`;
 
-});
-
 document.getElementById("productosGrid").innerHTML = html;
 
 }
 
+function cambiarCategoria(cat){
+
+categoriaActual = cat;
+
+renderProductos();
+
+}
 function agregarProducto(i){
 
 const producto = productos[i];
