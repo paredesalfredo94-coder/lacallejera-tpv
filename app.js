@@ -230,12 +230,9 @@ extrasSeleccionados = [];
 
 document.querySelectorAll(".extra-btn")
 .forEach(btn => btn.classList.remove("active"));
-
 document.getElementById("extrasModal").style.display = "flex";
 
 }
-
-
 
 function toggleExtra(btn,nombre,precio){
 
