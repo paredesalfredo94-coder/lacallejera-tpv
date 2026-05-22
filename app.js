@@ -175,7 +175,7 @@ html += `
 <button onclick="cambiarCategoria('➕ Extras')">➕ Extras</button>
 </div>
 
-<div class="grid">
+<div class="categoria-grid">
 `;
 
 /* PRODUCTOS */
