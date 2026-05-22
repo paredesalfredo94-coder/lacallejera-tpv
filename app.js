@@ -217,7 +217,7 @@ mostrarExtras();
 
 }
 
-}
+
 
 // SOLO hamburguesas y menús
 
@@ -230,7 +230,7 @@ mostrarExtras();
 
 }
 
-}
+
 
 let extrasSeleccionados = [];
 
@@ -267,7 +267,7 @@ imagen:""
 
 }
 
-}
+
 
 
 function confirmarExtras(){
