@@ -262,3 +262,34 @@ display:block;
 margin:auto;
 margin-bottom:8px;
 }
+
+.categoria-titulo{
+
+font-size:28px;
+font-weight:bold;
+margin:30px 0 15px;
+padding:12px;
+
+border-radius:12px;
+
+background:#111;
+
+color:#ffae00;
+
+text-shadow:0 0 10px #ff0000;
+
+border:2px solid #ff3c00;
+
+}
+
+.categoria-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+gap:15px;
+
+margin-bottom:30px;
+
+}
