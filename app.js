@@ -208,31 +208,21 @@ venta.push(producto);
 
 renderVenta();
 
-if(
-producto.categoria === "🍔 Hamburguesas" ||
-producto.categoria === "📦 Menús"
-){
-
-mostrarExtras();
-
-}
-}
-{
-
 // SOLO hamburguesas y menús
-
 if(
 producto.categoria === "🍔 Hamburguesas" ||
 producto.categoria === "📦 Menús"
 ){
-
 mostrarExtras();
+}
 
 }
-}
+
 
 
 let extrasSeleccionados = [];
+
+
 
 function mostrarExtras(){
 
@@ -246,11 +236,13 @@ document.getElementById("extrasModal").style.display = "flex";
 }
 
 
+
 function toggleExtra(btn,nombre,precio){
 
 btn.classList.toggle("active");
 
-const existe = extrasSeleccionados.find(e => e.nombre === nombre);
+const existe =
+extrasSeleccionados.find(e => e.nombre === nombre);
 
 if(existe){
 
@@ -270,6 +262,7 @@ imagen:""
 }
 
 
+
 function confirmarExtras(){
 
 extrasSeleccionados.forEach(extra => {
@@ -285,52 +278,10 @@ cerrarExtras();
 }
 
 
+
 function cerrarExtras(){
 
 document.getElementById("extrasModal").style.display = "none";
-
-}
-
-
-const agregarBacon = confirm("¿Agregar bacon +0.50€?");
-
-if(agregarBacon){
-
-venta.push({
-nombre:"Extra bacon",
-precio:0.50,
-imagen:"img/bacon.png.jpeg"
-});
-
-}
-
-
-const agregarPepinillos = confirm("¿Agregar pepinillos +0.50€?");
-
-if(agregarPepinillos){
-
-venta.push({
-nombre:"Extra pepinillos",
-precio:0.50,
-imagen:"img/pepinillos.png.jpeg"
-});
-
-}
-
-
-const agregarHuevo = confirm("¿Agregar huevo +0.50€?");
-
-if(agregarHuevo){
-
-venta.push({
-nombre:"Extra huevo",
-precio:0.50,
-imagen:"img/huevo.png.jpeg"
-});
-
-}
-
-renderVenta();
 
 }
 
