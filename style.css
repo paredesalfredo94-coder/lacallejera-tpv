@@ -86,9 +86,9 @@ body{
 .grid{
 display:grid;
 grid-template-columns:repeat(2,1fr);
-gap:16px;
-align-items:stretch;
-grid-auto-rows:190px;
+gap:18px;
+padding:15px;
+width:65%;
 }
 
 /* PRODUCTOS */
@@ -105,7 +105,7 @@ background:#111;
 border:2px solid #ff3b00;
 border-radius:18px;
 padding:12px;
-height:260px;
+height:320px;
 display:flex;
 flex-direction:column;
 justify-content:center;
@@ -122,8 +122,8 @@ background:#220000;
 }
 
 .grid button img{
-width:140px;
-height:140px;
+width:180px;
+height:180px;
 object-fit:contain;
 display:block;
 margin:auto;
