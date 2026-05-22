@@ -208,6 +208,16 @@ venta.push(producto);
 
 renderVenta();
 
+if(
+producto.categoria === "🍔 Hamburguesas" ||
+producto.categoria === "📦 Menús"
+){
+
+mostrarExtras();
+
+}
+
+}
 
 // SOLO hamburguesas y menús
 
@@ -222,17 +232,62 @@ mostrarExtras();
 
 }
 
+let extrasSeleccionados = [];
+
 function mostrarExtras(){
 
-const agregarQueso = confirm("¿Agregar queso cheddar +0.50€?");
+extrasSeleccionados = [];
 
-if(agregarQueso){
+document.querySelectorAll(".extra-btn")
+.forEach(btn => btn.classList.remove("active"));
 
-venta.push({
-nombre:"Extra queso cheddar",
-precio:0.50,
-imagen:"img/cheddar.png.jpeg"
+document.getElementById("extrasModal").style.display = "flex";
+
+}
+
+
+function toggleExtra(btn,nombre,precio){
+
+btn.classList.toggle("active");
+
+const existe = extrasSeleccionados.find(e => e.nombre === nombre);
+
+if(existe){
+
+extrasSeleccionados =
+extrasSeleccionados.filter(e => e.nombre !== nombre);
+
+}else{
+
+extrasSeleccionados.push({
+nombre,
+precio,
+imagen:""
 });
+
+}
+
+}
+
+
+function confirmarExtras(){
+
+extrasSeleccionados.forEach(extra => {
+
+venta.push(extra);
+
+});
+
+renderVenta();
+
+cerrarExtras();
+
+}
+
+
+function cerrarExtras(){
+
+document.getElementById("extrasModal").style.display = "none";
 
 }
 
